@@ -184,7 +184,7 @@ class EmscrWasmRunnable {
         if (instance.FS.isFile(node.mode))
           files.push({
             name: nodePath,
-            timestamp: node.timestamp,
+            timestamp: node.timestamp ?? node.mtime,
             bytes: includeBinary
               ? instance.FS.readFile(nodePath)
               : new Uint8Array(),
