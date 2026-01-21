@@ -819,7 +819,8 @@ class WasmWebTerm {
       // `WasmRunner` module to the original worker source
       let prelude = "self._modules={"
       for (const [id, module] of Object.entries(extraModules)) {
-        prelude += `${id}:${module.toString()},`
+        const str = module.toString()
+        prelude += str.startsWith(id) ? `${str},` : `${id}:${str},`
       }
       prelude += `};self.WasmRunnerID=${WasmRunnerID}\n`
 

@@ -35,12 +35,12 @@
     "xterm-addon-fit": "^0.5.0"
   },
   "devDependencies": {
-    "@swc/core": "^1.15.3",
-    "memfs": "^4.51.0",
-    "prettier": "^3.6.2",
+    "@swc/core": "^1.15.10",
+    "memfs": "^4.56.9",
+    "prettier": "^3.8.1",
     "process": "^0.11.10",
-    "swc-loader": "^0.2.6",
-    "webpack": "^5.103.0",
+    "swc-loader": "^0.2.7",
+    "webpack": "^5.104.1",
     "webpack-cli": "^6.0.1"
   },
   "peerDependencies": {
