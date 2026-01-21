@@ -49,7 +49,7 @@ class EmscrWasmRunnable {
 
     // define emscr module
     let emscrModule = {
-      thisProgramm: this.programName,
+      thisProgram: this.programName,
       instantiateWasm: (imports, callback) => {
         WebAssembly.instantiate(this.wasmModule, imports).then((instance) =>
           callback(instance, this.wasmModule)
