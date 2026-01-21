@@ -24,7 +24,8 @@ class WasmRunner {
     onError,
     onSuccess,
     stdinPreset,
-    emscrJsRuntime
+    emscrJsRuntime,
+    linkedName
   ) {
     // initialize default callbacks
     if (typeof onFinish != "function") onFinish = () => {}
@@ -54,7 +55,8 @@ class WasmRunner {
       let emscrWasmExe = new EmscrWasmRunnable(
         programName,
         wasmModule,
-        emscrJsRuntime
+        emscrJsRuntime,
+        linkedName
       )
 
       // pipe stdin calls through stdin handler (which pauses thread)
@@ -115,7 +117,8 @@ class WasmRunner {
     onError,
     onSuccess,
     stdinPreset,
-    emscrJsRuntime
+    emscrJsRuntime,
+    linkedName
   ) {
     // initialize default callbacks
     if (typeof onFinish != "function") onFinish = () => {}
@@ -131,7 +134,8 @@ class WasmRunner {
       let emscrWasmExe = new EmscrWasmRunnable(
         programName,
         wasmModule,
-        emscrJsRuntime
+        emscrJsRuntime,
+        linkedName
       )
 
       // run command on it

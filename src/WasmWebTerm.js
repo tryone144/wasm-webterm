@@ -404,7 +404,8 @@ class WasmWebTerm {
             onError,
             null,
             stdinPreset,
-            wasmModule.runtime
+            wasmModule.runtime,
+            wasmModule.linkedName
           )
         // if not -> fallback with prompts
         // start execution on the MAIN thread (freezes terminal)
@@ -422,7 +423,8 @@ class WasmWebTerm {
             onError,
             null,
             stdinPreset,
-            wasmModule.runtime
+            wasmModule.runtime,
+            wasmModule.linkedName
           )
       })
 
@@ -484,7 +486,8 @@ class WasmWebTerm {
             onError,
             onSuccess,
             stdinPreset,
-            wasmModule.runtime
+            wasmModule.runtime,
+            wasmModule.linkedName
           )
         // if not -> use fallback
         // start execution on the MAIN thread (freezes terminal)
@@ -499,7 +502,8 @@ class WasmWebTerm {
             onError,
             onSuccess,
             stdinPreset,
-            wasmModule.runtime
+            wasmModule.runtime,
+            wasmModule.linkedName
           )
       })
 
@@ -588,7 +592,7 @@ class WasmWebTerm {
               )
               if (linkResponse?.ok) {
                 // read new program name from .lnk file
-                const linkedProgramName = await linkResponse.text()
+                const linkedProgramName = (await linkResponse.text()).trim()
                 const linkDestination =
                   this.wasmBinaryPath + "/" + linkedProgramName + ".wasm"
 
@@ -616,9 +620,12 @@ class WasmWebTerm {
                       const firstChar = String.fromCharCode(
                         new Uint8Array(jsRuntimeCode).subarray(0, 1).toString()
                       )
-                      if (firstChar != "<")
+                      if (firstChar != "<") {
                         // set this module's runtime
                         wasmModule.runtime = jsRuntimeCode
+                        // save the linked name to find the runtime
+                        wasmModule.linkedName = linkedProgramName
+                      }
                     }
 
                     // if no valid js runtime was found -> it's considered a wasmer binary

@@ -7,10 +7,10 @@ class EmscrWasmRunnable {
 
   #emscrJsRuntime
 
-  constructor(programName, wasmModule, jsRuntime) {
+  constructor(programName, wasmModule, jsRuntime, linkedName) {
     this.programName = programName
     this.wasmModule = wasmModule
-    this._loadEmscrJsRuntime(jsRuntime)
+    this._loadEmscrJsRuntime(jsRuntime, linkedName)
   }
 
   /**
@@ -220,8 +220,8 @@ class EmscrWasmRunnable {
 
   /* internal methods */
 
-  _loadEmscrJsRuntime(jsRuntime) {
-    const emscrJsModuleName = "EmscrJSR_" + this.programName
+  _loadEmscrJsRuntime(jsRuntime, linkedName) {
+    const emscrJsModuleName = "EmscrJSR_" + (linkedName || this.programName)
 
     // try worker import
     if (this._isWorkerScope()) {
@@ -256,6 +256,9 @@ class EmscrWasmRunnable {
       // read emscripten Module from js runtime
       this.#emscrJsRuntime = window[emscrJsModuleName]
     } else throw new Error("can not load emscr js runtime environment")
+
+    if (this.#emscrJsRuntime == null)
+      throw new Error(`emscr js runtime '${emscrJsModuleName}' not found`)
   }
 
   _isWorkerScope() {
